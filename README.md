@@ -5,18 +5,18 @@ MyStore is a feature-rich e-commerce platform built with Next.js. It provides a 
 
 ## ✨ Features
 
-🛠️ **Admin Role**:
+🛠️ **Admin Role:**
 - ➕ Add, 🖊️ Edit, and ❌ Delete products.
-- 🔒 Access Control to prevent unauthorized actions.
- 👥 **User Role**:
-- 🛍️  View all products without modification privileges.
-🔗 **API Integration**:
-- 📡 Fetches and updates data from [fakestoreapi](https://fakestoreapi.com/).
-📱 **Responsive Design**:
-- 💻 Optimized for desktops, tablets, and mobile devices.
-🧭 **Interactive Navbar**:
-- 🍔 Includes a hamburger menu for small screens, auto-closing upon selection.
-⚠️ **Error Handling**:
+- 🔒 Access Control to prevent unauthorized actions.<br/>
+ 👥 **User Role:**
+- 🛍️  View all products without modification privileges.<br/>
+🔗 **API Integration:**
+- 📡 Fetches and updates data from [fakestoreapi](https://fakestoreapi.com/).<br/>
+📱 **Responsive Design:**
+- 💻 Optimized for desktops, tablets, and mobile devices.<br/>
+🧭 **Interactive Navbar:**
+- 🍔 Includes a hamburger menu for small screens, auto-closing upon selection.<br/>
+⚠️ **Error Handling:**
 - 🚫 Displays user-friendly error messages for unauthorized actions or API issues.
 
 

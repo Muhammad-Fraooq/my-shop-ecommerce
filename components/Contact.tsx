@@ -52,7 +52,7 @@ const ContactForm = () => {
       setTimeout(() => setSubmitted(null), 3000); // Auto-clear success message
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
-        const newErrors = {
+        const newErrors:ErrorTypes = {
           name: "",
           email: "",
           subject: "",
