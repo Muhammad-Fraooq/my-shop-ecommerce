@@ -62,6 +62,15 @@ export default function AddProduct() {
     router.push("/add"); // Redirect to home or login page
   };
 
+  useEffect(() => {
+    const editProduct = sessionStorage.getItem("editProduct");
+    if (editProduct) {
+      const productData = JSON.parse(editProduct);
+      setProduct(productData);
+      sessionStorage.removeItem("editProduct");
+    }
+  }, []);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -171,100 +180,102 @@ export default function AddProduct() {
         <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-2xl pt-16">
           <button
             onClick={handleLogout}
-            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 focus:outline-none"
+            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-4 focus:outline-none"
           >
             Logout
           </button>
+          <h1 className="text-3xl  font-extrabold text-blue-600 text-center">
+            {product.id ? "Edit Product" : "Add New Product"}
+          </h1>
           <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-2xl ">
+          <button
+            onClick={() => router.push("/showproducts")}
+            className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-4 focus:outline-none"
+          >
+            Back to Products
+          </button>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="title"
+              placeholder="Product Title"
+              value={product.title}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              required
+            />
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={product.category}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              required
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={product.price}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              required
+            />
+            <textarea
+              name="description"
+              placeholder="Description"
+              value={product.description}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              required
+            />
+            <input
+              type="url"
+              name="image"
+              placeholder="Image URL"
+              value={product.image}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              required
+            />
             <button
-              onClick={() => router.push("/showproducts")}
-              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-4 focus:outline-none"
+              type="submit"
+              className={`w-full py-2 rounded-md ${
+                loading
+                  ? "bg-yellow-500 cursor-not-allowed"
+                  : product.id
+                  ? "bg-yellow-500 hover:bg-yellow-600 text-white"
+                  : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
+              disabled={loading}
             >
-              Back to Products
+              {
+                loading
+                  ? "Saving..."
+                  : product.id
+                  ? "Update Product" // Text for editing a product
+                  : "Add Product" // Text for adding a new product
+              }
             </button>
+          </form>
+          {message && (
+            <p
+              className={`mt-4 p-2 rounded-md ${
+                message.includes("success")
+                  ? "bg-green-100 text-green-600"
+                  : "bg-red-100 text-red-600"
+              }`}
+            >
+              {message}
+            </p>
+          )}
+        </div>
 
-            <h1 className="text-3xl mb-4 font-extrabold text-blue-600 text-center">
-              {product.id ? "Edit Product" : "Add New Product"}
-            </h1>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="title"
-                placeholder="Product Title"
-                value={product.title}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md"
-                required
-              />
-              <input
-                type="text"
-                name="category"
-                placeholder="Category"
-                value={product.category}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md"
-                required
-              />
-              <input
-                type="number"
-                name="price"
-                placeholder="Price"
-                value={product.price}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md"
-                required
-              />
-              <textarea
-                name="description"
-                placeholder="Description"
-                value={product.description}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md"
-                required
-              />
-              <input
-                type="url"
-                name="image"
-                placeholder="Image URL"
-                value={product.image}
-                onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-md"
-                required
-              />
-              <button
-                type="submit"
-                className={`w-full py-2 rounded-md ${
-                  loading
-                    ? "bg-yellow-500 cursor-not-allowed"
-                    : product.id
-                    ? "bg-yellow-500 hover:bg-yellow-600 text-white"
-                    : "bg-blue-500 hover:bg-blue-600 text-white"
-                }`}
-                disabled={loading}
-              >
-                {
-                  loading
-                    ? "Saving..."
-                    : product.id
-                    ? "Update Product" // Text for editing a product
-                    : "Add Product" // Text for adding a new product
-                }
-              </button>
-            </form>
-            {message && (
-              <p
-                className={`mt-4 p-2 rounded-md ${
-                  message.includes("success")
-                    ? "bg-green-100 text-green-600"
-                    : "bg-red-100 text-red-600"
-                }`}
-              >
-                {message}
-              </p>
-            )}
-          </div>
         </div>
       )}
     </div>
   );
 }
+
+    
