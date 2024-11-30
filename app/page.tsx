@@ -5,10 +5,10 @@ const HomePage = () => {
   return (
     <div className="homepage">
       {/* Hero Section */}
-      <section className="hero relative h-screen text-white p-16">
+      <section className="hero relative h-screen text-white p-8 sm:p-16">
         {/* Background Video */}
         <video
-          className="absolute inset-0 w-full h-full object-cover z-[-1]"
+          className="absolute inset-0 w-full h-full object-cover z-[-1] min-w-full min-h-full"
           autoPlay
           loop
           muted
@@ -19,11 +19,11 @@ const HomePage = () => {
         </video>
 
         {/* Hero Content */}
-        <div className="hero-content absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-t from-transparent via-black/40 to-transparent text-center px-4">
-          <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 drop-shadow-lg">
+        <div className="hero-content absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-t from-black/50 via-transparent to-black/50 text-center px-4 sm:px-8">
+          <h1 className="text-3xl sm:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Welcome to <span className="text-yellow-300">My-Shop</span>
           </h1>
-          <p className="text-lg sm:text-xl mb-6 font-medium text-gray-200">
+          <p className="text-base sm:text-xl mb-6 font-medium text-gray-200">
             Your One-Stop Shop for Amazing Products
           </p>
           <Link href="/showproducts">

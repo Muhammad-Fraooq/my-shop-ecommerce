@@ -31,16 +31,23 @@ export default function AddProduct() {
   };
 
   const handleAdminLogin = () => {
+    // Form validation
     if (!name || !password) {
       setLoginError("Please provide both admin name and password.");
       return;
     }
+
+    // Admin credentials check
     if (
       name === adminCredentials.name &&
       password === adminCredentials.password
     ) {
       setIsAdmin(true);
       setLoginError(null);
+      sessionStorage.setItem("isAdmin", "true"); // Store admin session info
+
+      // Redirect to a different page after successful login
+      router.push("/add"); // Or redirect to home if required
     } else {
       setLoginError("Invalid admin credentials.");
     }

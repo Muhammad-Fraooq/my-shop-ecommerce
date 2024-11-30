@@ -4,42 +4,16 @@ import { useProducts } from "../context/ProductsContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-interface Product {
-  id: number;
-  title: string;
-  category: string;
-  price: string;
-  description: string;
-  image: string;
-  tempId?: string;
-}
+import { Product } from "@/types/componentsTypes";
 
 export default function ShowProducts() {
   const { products, setProducts } = useProducts();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [adminError, setAdminError] = useState<string | null>(null); // Unauthorized error
   const [fetched, setFetched] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // Admin state
   const router = useRouter();
 
-  useEffect(() => {
-    const adminCredentials = {
-      name: "Muhammad Farooq",
-      password: "Muhammad2007",
-    };
-
-    const storedName = sessionStorage.getItem("adminName");
-    const storedPassword = sessionStorage.getItem("adminPassword");
-
-    if (
-      storedName === adminCredentials.name &&
-      storedPassword === adminCredentials.password
-    ) {
-      setIsAdmin(true);
-    }
-  }, []);
+  
 
   useEffect(() => {
     if (!fetched && products.length === 0) {
@@ -65,21 +39,30 @@ export default function ShowProducts() {
   }, [fetched, setProducts, products.length]);
 
   const handleDelete = async (id: number) => {
-    if (!isAdmin) {
-      setAdminError("Only an admin can delete products.");
-      setTimeout(() => setAdminError(null), 3000); // Clear error after 3 seconds
-      return;
-    }
+  
+    const isAdmin = sessionStorage.getItem("isAdmin"); // Check if user is admin
 
+    if (!isAdmin) {
+      // If not admin, show an error and don't allow deletion
+      alert("Only admin can delete products.");
+      return; // Exit the function if not admin
+    }
     try {
+      // Admins proceed to delete
       const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
         method: "DELETE",
       });
+
       if (!res.ok) throw new Error("Failed to delete product");
 
+      // Update state after successful deletion
       setProducts((prev) => prev.filter((product) => product.id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
+      setError(
+        "An error occurred while deleting the product. Please try again."
+      );
+      setTimeout(() => setError(null), 3000); // Clear error
     }
   };
 
@@ -88,15 +71,11 @@ export default function ShowProducts() {
     router.push("/add");
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("adminName");
-    sessionStorage.removeItem("adminPassword");
-    setIsAdmin(true); // Reset isAdmin to false on logout
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 pt-20">
-      <h1 className="text-4xl font-extrabold text-blue-600 text-center">Products</h1>
+      <h1 className="text-4xl font-extrabold text-blue-600 text-center">
+        Products
+      </h1>
 
       {loading && !fetched && (
         <div className="flex flex-col items-center justify-center min-h-[200px]">
@@ -108,14 +87,8 @@ export default function ShowProducts() {
       )}
 
       {error && (
-        <p className="text-center bg-red-100 text-red-600 border border-red-400 rounded-md px-4 py-2 max-w-lg mx-auto text-lg shadow">
+        <p className="text-center bg-red-100 text-red-600 border border-red-400 rounded-md px-4 py-2 max-w-lg mx-auto text-lg shadow mt-4">
           {error}
-        </p>
-      )}
-
-      {adminError && (
-        <p className="text-center bg-yellow-100 text-yellow-600 border border-yellow-400 rounded-md px-4 py-2 max-w-lg mx-auto text-lg shadow mt-4">
-          {adminError}
         </p>
       )}
 
@@ -157,8 +130,8 @@ export default function ShowProducts() {
                 >
                   <FaEdit className="text-white" />
                 </button>
-                {/* Delete button is always visible for both admin and user */}
-                {isAdmin && (
+                {/* Conditionally render the delete button for admins only */}
+                {sessionStorage.getItem("isAdmin") === "true" && (
                   <button
                     className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition"
                     onClick={() => handleDelete(product.id)}
@@ -171,18 +144,6 @@ export default function ShowProducts() {
           </div>
         ))}
       </div>
-
-      {/* Logout button for admin */}
-      {/* {isAdmin && ( */}
-      <div className="text-center mt-8">
-        <button
-          onClick={handleLogout}
-          className="bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600"
-        >
-          Logout
-        </button>
-      </div>
-      {/* // )} */}
     </div>
   );
 }
