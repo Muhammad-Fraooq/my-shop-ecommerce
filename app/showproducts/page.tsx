@@ -13,8 +13,6 @@ export default function ShowProducts() {
   const [fetched, setFetched] = useState(false);
   const router = useRouter();
 
-  
-
   useEffect(() => {
     if (!fetched && products.length === 0) {
       const fetchProducts = async () => {
