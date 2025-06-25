@@ -35,6 +35,6 @@ If you have any questions, suggestions, or would like to discuss potential colla
 - 🐙 GitHub: [GitHub.](https://github.com/Muhammad-Fraooq)
 - 🔗 LinkedIn: [LinkedIn.](https://www.linkedin.com/in/muhammad-farooq-1a168a2b6/)
 
-##📄 License
+## 📄 License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE)
