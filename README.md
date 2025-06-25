@@ -30,8 +30,11 @@ MyStore is a feature-rich e-commerce platform built with Next.js. It provides a 
 
 If you have any questions, suggestions, or would like to discuss potential collaboration opportunities, feel free to reach out to me:
 
-
 - 🧑‍💻 Muhammad Farooq
 - 📧 Email: [Email.](muhammad888xyz@gmail.com)
 - 🐙 GitHub: [GitHub.](https://github.com/Muhammad-Fraooq)
 - 🔗 LinkedIn: [LinkedIn.](https://www.linkedin.com/in/muhammad-farooq-1a168a2b6/)
+
+📄 License
+
+This project is licensed under the MIT License. See (LICENSE)[LICENSE]
